@@ -1,5 +1,7 @@
+import Link from 'next/link';
 import { Header } from '@/components/Header';
 import { getAllQuestions, getTopics } from '@/lib/questions';
+import { getScenarios } from '@/lib/constructor';
 
 export default function HomePage() {
   const allQuestions = getAllQuestions();
@@ -53,6 +55,21 @@ export default function HomePage() {
               ))}
             </ul>
           </div>
+        </div>
+
+        <div className="mt-12 mb-8">
+          <Link
+            href="/design"
+            className="block bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl shadow-sm p-6 text-white hover:from-blue-700 hover:to-indigo-700 transition-all"
+          >
+            <h2 className="text-xl font-semibold mb-2">System Design Constructor</h2>
+            <p className="text-blue-100 text-sm mb-3">
+              Проектируйте реальные системы шаг за шагом: выбирайте технологии, изучайте trade-offs, сравнивайте с эталоном
+            </p>
+            <p className="text-blue-200 text-xs">
+              {getScenarios().length} сценариев: URL Shortener, Chat Messenger, News Feed, Video Streaming и другие
+            </p>
+          </Link>
         </div>
 
         <div className="text-center text-gray-400 text-sm">

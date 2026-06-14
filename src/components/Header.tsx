@@ -3,11 +3,16 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useTheme } from './ThemeProvider';
+import { useLang } from './LanguageProvider';
+import { useT } from '@/i18n/useT';
+import { LANGS } from '@/i18n/strings';
 
 const API_KEY_STORAGE_KEY = 'openai-api-key';
 
 export function Header() {
   const { theme, toggleTheme, mounted } = useTheme();
+  const { lang, setLang } = useLang();
+  const t = useT();
   const [showModal, setShowModal] = useState(false);
   const [apiKey, setApiKey] = useState('');
   const [hasKey, setHasKey] = useState(false);
@@ -40,14 +45,30 @@ export function Header() {
       <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="text-xl font-bold text-gray-900 dark:text-white">
-            System Design Trainer
+            {t.brand}
           </Link>
           <div className="flex items-center gap-3">
+            <div className="flex items-center rounded-lg border border-gray-300 dark:border-gray-600 overflow-hidden" role="group" aria-label={t.language}>
+              {LANGS.map((l) => (
+                <button
+                  key={l}
+                  onClick={() => setLang(l)}
+                  aria-pressed={lang === l}
+                  className={`px-2.5 py-1 text-xs font-medium uppercase transition-colors ${
+                    lang === l
+                      ? 'bg-blue-600 text-white'
+                      : 'text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800'
+                  }`}
+                >
+                  {l}
+                </button>
+              ))}
+            </div>
             <button
               onClick={toggleTheme}
               disabled={!mounted}
               className="p-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50"
-              title={theme === 'light' ? 'Тёмная тема' : 'Светлая тема'}
+              title={theme === 'light' ? t.darkTheme : t.lightTheme}
             >
               {!mounted || theme === 'light' ? (
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -70,7 +91,7 @@ export function Header() {
             <button
               onClick={() => setShowModal(true)}
               className={`p-2 rounded-lg border ${hasKey ? 'border-green-500 text-green-600' : 'border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400'} hover:bg-gray-50 dark:hover:bg-gray-800`}
-              title={hasKey ? 'API ключ настроен' : 'Настроить API ключ'}
+              title={hasKey ? t.api.configured : t.api.configure}
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>
@@ -80,7 +101,7 @@ export function Header() {
               href="/quiz"
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm"
             >
-              Начать тренировку
+              {t.startTraining}
             </Link>
           </div>
         </div>
@@ -89,9 +110,9 @@ export function Header() {
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowModal(false)}>
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl p-6 w-full max-w-md mx-4" onClick={e => e.stopPropagation()}>
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Настройки OpenAI API</h2>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t.api.title}</h2>
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-              Введите ваш OpenAI API ключ для AI-оценки открытых ответов. Ключ хранится только в вашем браузере.
+              {t.api.hint}
             </p>
             <input
               type="password"
@@ -105,19 +126,19 @@ export function Header() {
                 onClick={handleSave}
                 className="flex-1 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
               >
-                Сохранить
+                {t.api.save}
               </button>
               <button
                 onClick={handleClear}
                 className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700"
               >
-                Очистить
+                {t.api.clear}
               </button>
               <button
                 onClick={() => setShowModal(false)}
                 className="px-4 py-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
               >
-                Отмена
+                {t.api.cancel}
               </button>
             </div>
           </div>

@@ -3,6 +3,7 @@
 import type { Step } from '@/data/constructor/types';
 import { OptionCard } from './OptionCard';
 import { TipReveal } from './TipReveal';
+import { useT } from '@/i18n/useT';
 
 interface StepCardProps {
   step: Step;
@@ -12,6 +13,7 @@ interface StepCardProps {
 }
 
 export function StepCard({ step, selections, onSelect, onDeselect }: StepCardProps) {
+  const t = useT();
   return (
     <div className="space-y-6">
       <div>
@@ -30,7 +32,7 @@ export function StepCard({ step, selections, onSelect, onDeselect }: StepCardPro
               </h3>
               {decision.multiSelect && (
                 <span className="text-xs text-blue-600 dark:text-blue-400">
-                  Можно выбрать несколько
+                  {t.stepCard.multiSelect}
                 </span>
               )}
             </div>

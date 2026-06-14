@@ -33,7 +33,7 @@ describe('TradeOffMatrix', () => {
 
     render(<TradeOffMatrix metrics={metrics} />);
 
-    expect(screen.getByText('Сильные стороны')).toBeInTheDocument();
+    expect(screen.getByText('What you gained')).toBeInTheDocument();
     expect(screen.getByText('Latency (9)')).toBeInTheDocument();
     expect(screen.getByText('Scalability (8)')).toBeInTheDocument();
   });
@@ -49,7 +49,7 @@ describe('TradeOffMatrix', () => {
 
     render(<TradeOffMatrix metrics={metrics} />);
 
-    expect(screen.getByText('Слабые стороны')).toBeInTheDocument();
+    expect(screen.getByText('What you gave up')).toBeInTheDocument();
     expect(screen.getByText('Simplicity (3)')).toBeInTheDocument();
     expect(screen.getByText('Cost Efficiency (2)')).toBeInTheDocument();
   });

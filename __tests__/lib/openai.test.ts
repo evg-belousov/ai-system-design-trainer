@@ -17,7 +17,7 @@ describe('evaluateAnswer', () => {
 
     expect(result.source).toBe('fallback');
     expect(result.score).toBeNull();
-    expect(result.feedback).toContain('недоступна');
+    expect(result.feedback).toContain('unavailable');
   });
 
   it('should return fallback when OPENAI_API_KEY is undefined', async () => {

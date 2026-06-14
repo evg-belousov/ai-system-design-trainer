@@ -1,21 +1,32 @@
 import { allScenarios } from '@/data/constructor';
+import { enScenarios } from '@/data/en/constructor';
 import type { Scenario, MetricKey, Impact, CapacityEstimate } from '@/data/constructor/types';
+import type { Lang } from '@/i18n/strings';
 
 const METRIC_KEYS: MetricKey[] = ['latency', 'scalability', 'consistency', 'complexity', 'cost'];
 const BASE_VALUE = 5;
 const MIN_VALUE = 0;
 const MAX_VALUE = 10;
 
-export function getScenarios(): Scenario[] {
-  return allScenarios;
+const scenarioSets: Record<Lang, Scenario[]> = {
+  ru: allScenarios,
+  en: enScenarios,
+};
+
+function scenarios(lang: Lang): Scenario[] {
+  return scenarioSets[lang] ?? allScenarios;
 }
 
-export function getScenarioById(id: string): Scenario | undefined {
-  return allScenarios.find(s => s.id === id);
+export function getScenarios(lang: Lang = 'en'): Scenario[] {
+  return scenarios(lang);
 }
 
-export function getScenariosByDifficulty(difficulty: 'middle' | 'senior'): Scenario[] {
-  return allScenarios.filter(s => s.difficulty === difficulty);
+export function getScenarioById(id: string, lang: Lang = 'en'): Scenario | undefined {
+  return scenarios(lang).find(s => s.id === id);
+}
+
+export function getScenariosByDifficulty(difficulty: 'middle' | 'senior', lang: Lang = 'en'): Scenario[] {
+  return scenarios(lang).filter(s => s.difficulty === difficulty);
 }
 
 export function calculateMetrics(

@@ -83,7 +83,7 @@ describe('SolutionComparison', () => {
 
     render(<SolutionComparison scenario={mockScenario} selections={selections} />);
 
-    expect(screen.getByText('Сравнение с эталоном')).toBeInTheDocument();
+    expect(screen.getByText('Comparison with the reference')).toBeInTheDocument();
     expect(screen.getByText('Which database?')).toBeInTheDocument();
     expect(screen.getByText('Caching approach?')).toBeInTheDocument();
     expect(screen.getAllByText('PostgreSQL').length).toBeGreaterThanOrEqual(1);
@@ -118,8 +118,8 @@ describe('SolutionComparison', () => {
 
     render(<SolutionComparison scenario={mockScenario} selections={selections} />);
 
-    expect(screen.getByText('Объяснение эталонного решения')).toBeInTheDocument();
+    expect(screen.getByText('Reference solution explanation')).toBeInTheDocument();
     expect(screen.getByText('PostgreSQL provides strong consistency. Redis adds fast caching.')).toBeInTheDocument();
-    expect(screen.getByText('Архитектурная диаграмма')).toBeInTheDocument();
+    expect(screen.getByText('Architecture diagram')).toBeInTheDocument();
   });
 });

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useT } from '@/i18n/useT';
 
 interface TipRevealProps {
   tip: string;
@@ -8,6 +9,7 @@ interface TipRevealProps {
 
 export function TipReveal({ tip }: TipRevealProps) {
   const [revealed, setRevealed] = useState(false);
+  const t = useT();
 
   return (
     <div className="mt-3">
@@ -16,7 +18,7 @@ export function TipReveal({ tip }: TipRevealProps) {
           onClick={() => setRevealed(true)}
           className="text-sm text-blue-600 dark:text-blue-400 hover:underline cursor-pointer"
         >
-          Показать подсказку
+          {t.tipReveal.showTip}
         </button>
       ) : (
         <div className="text-sm bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3 text-blue-800 dark:text-blue-300">

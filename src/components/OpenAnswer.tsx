@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useT } from '@/i18n/useT';
 
 interface OpenAnswerProps {
   onSubmit: (answer: string) => void;
@@ -9,6 +10,7 @@ interface OpenAnswerProps {
 
 export function OpenAnswer({ onSubmit, disabled }: OpenAnswerProps) {
   const [text, setText] = useState('');
+  const t = useT();
 
   const handleSubmit = () => {
     if (text.trim()) {
@@ -20,7 +22,7 @@ export function OpenAnswer({ onSubmit, disabled }: OpenAnswerProps) {
     <div className="space-y-4">
       <textarea
         className="w-full p-4 border border-gray-200 dark:border-gray-700 rounded-lg resize-y min-h-32 text-gray-900 dark:text-white bg-white dark:bg-gray-800 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:border-blue-400"
-        placeholder="Введите ваш ответ..."
+        placeholder={t.openAnswer.placeholder}
         value={text}
         onChange={(e) => setText(e.target.value)}
         disabled={disabled}
@@ -31,7 +33,7 @@ export function OpenAnswer({ onSubmit, disabled }: OpenAnswerProps) {
         onClick={handleSubmit}
         disabled={disabled || !text.trim()}
       >
-        Ответить
+        {t.openAnswer.submit}
       </button>
     </div>
   );

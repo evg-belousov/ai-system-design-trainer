@@ -6,6 +6,7 @@ import { ScoreCard } from './ScoreCard';
 import { TradeOffMatrix } from './TradeOffMatrix';
 import { SolutionComparison } from './SolutionComparison';
 import { MetricsPanel } from './MetricsPanel';
+import { useT } from '@/i18n/useT';
 
 interface SummaryViewProps {
   scenario: Scenario;
@@ -15,12 +16,13 @@ interface SummaryViewProps {
 }
 
 export function SummaryView({ scenario, selections, score, onReset }: SummaryViewProps) {
+  const t = useT();
   const userMetrics = calculateMetrics(scenario, selections);
   const refMetrics = calculateMetrics(scenario, scenario.referenceSolution.decisions);
 
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-bold text-gray-900 dark:text-white">Результаты</h2>
+      <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t.summaryView.results}</h2>
 
       <div className="grid md:grid-cols-2 gap-6">
         <ScoreCard score={score} onReset={onReset} />

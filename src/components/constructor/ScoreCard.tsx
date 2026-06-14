@@ -1,11 +1,14 @@
 'use client';
 
+import { useT } from '@/i18n/useT';
+
 interface ScoreCardProps {
   score: number;
   onReset: () => void;
 }
 
 export function ScoreCard({ score, onReset }: ScoreCardProps) {
+  const t = useT();
   const color = score >= 75
     ? 'text-green-600 dark:text-green-400'
     : score >= 50
@@ -26,17 +29,17 @@ export function ScoreCard({ score, onReset }: ScoreCardProps) {
 
       <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
         {score >= 75
-          ? 'Отличный результат! Ваше решение близко к эталону.'
+          ? t.scoreCard.excellent
           : score >= 50
-            ? 'Хороший результат. Есть потенциал для улучшения.'
-            : 'Есть над чем поработать. Изучите эталонное решение.'}
+            ? t.scoreCard.good
+            : t.scoreCard.poor}
       </p>
 
       <button
         onClick={onReset}
         className="px-4 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 border border-blue-600 dark:border-blue-400 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors cursor-pointer"
       >
-        Пройти заново
+        {t.scoreCard.retry}
       </button>
     </div>
   );

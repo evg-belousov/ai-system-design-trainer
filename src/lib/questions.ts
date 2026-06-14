@@ -1,4 +1,5 @@
 import type { Question, Block, Difficulty } from '@/data/types';
+import type { Lang } from '@/i18n/strings';
 
 import { modelingQuestions } from '@/data/sa/modeling';
 import { architectureQuestions } from '@/data/sa/architecture';
@@ -38,7 +39,9 @@ import { mlopsQuestions } from '@/data/ai/mlops';
 import { aiSafetyQuestions } from '@/data/ai/ai-safety';
 import { evaluationQuestions } from '@/data/ai/evaluation';
 
-const allQuestions: Question[] = [
+import { enQuestions } from '@/data/en/questions';
+
+const ruQuestions: Question[] = [
   ...modelingQuestions,
   ...architectureQuestions,
   ...databasesQuestions,
@@ -76,16 +79,25 @@ const allQuestions: Question[] = [
   ...evaluationQuestions,
 ];
 
-export function getAllQuestions(): Question[] {
-  return allQuestions;
+const datasets: Record<Lang, Question[]> = {
+  ru: ruQuestions,
+  en: enQuestions,
+};
+
+function dataset(lang: Lang): Question[] {
+  return datasets[lang] ?? ruQuestions;
 }
 
-export function getQuestionsByBlock(block: Block): Question[] {
-  return allQuestions.filter(q => q.block === block);
+export function getAllQuestions(lang: Lang = 'en'): Question[] {
+  return dataset(lang);
 }
 
-export function getQuestionsByTopic(block: Block, topic: string): Question[] {
-  return allQuestions.filter(q => q.block === block && q.topic === topic);
+export function getQuestionsByBlock(block: Block, lang: Lang = 'en'): Question[] {
+  return dataset(lang).filter(q => q.block === block);
+}
+
+export function getQuestionsByTopic(block: Block, topic: string, lang: Lang = 'en'): Question[] {
+  return dataset(lang).filter(q => q.block === block && q.topic === topic);
 }
 
 export function getQuestionsByDifficulty(questions: Question[], difficulty: Difficulty): Question[] {
@@ -97,9 +109,9 @@ export interface TopicInfo {
   label: string;
 }
 
-export function getTopics(block: Block): TopicInfo[] {
+export function getTopics(block: Block, lang: Lang = 'en'): TopicInfo[] {
   const seen = new Map<string, string>();
-  for (const q of allQuestions) {
+  for (const q of dataset(lang)) {
     if (q.block === block && !seen.has(q.topic)) {
       seen.set(q.topic, q.topicLabel);
     }

@@ -5,13 +5,16 @@ import { Header } from '@/components/Header';
 import { ScenarioCard } from '@/components/constructor/ScenarioCard';
 import { useConstructorProgress } from '@/hooks/useConstructorProgress';
 import { getScenarios } from '@/lib/constructor';
-
-const scenarios = getScenarios();
+import { useLang } from '@/components/LanguageProvider';
+import { useT } from '@/i18n/useT';
 
 export default function DesignPage() {
   const [difficulty, setDifficulty] = useState<'all' | 'middle' | 'senior'>('all');
   const { getProgress } = useConstructorProgress();
+  const { lang } = useLang();
+  const t = useT();
 
+  const scenarios = getScenarios(lang);
   const filtered = difficulty === 'all'
     ? scenarios
     : scenarios.filter(s => s.difficulty === difficulty);
@@ -25,7 +28,7 @@ export default function DesignPage() {
             System Design Constructor
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
-            Проектируйте реальные системы шаг за шагом, изучая trade-offs и лучшие практики
+            {t.design.subtitle}
           </p>
         </div>
 
@@ -40,7 +43,7 @@ export default function DesignPage() {
                   : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
               }`}
             >
-              {level === 'all' ? 'Все' : level}
+              {level === 'all' ? t.quizSetup.all : level}
             </button>
           ))}
         </div>
@@ -56,7 +59,7 @@ export default function DesignPage() {
         </div>
 
         <div className="text-center mt-8 text-gray-400 text-sm">
-          {scenarios.length} сценариев · Middle / Senior
+          {t.design.footer(scenarios.length)}
         </div>
       </main>
     </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import type { Scenario } from '@/data/constructor/types';
+import { useT } from '@/i18n/useT';
 
 function renderSimpleMarkdown(text: string): React.ReactNode[] {
   const parts = text.split(/(\*\*[^*]+\*\*)/g);
@@ -18,12 +19,13 @@ interface SolutionComparisonProps {
 }
 
 export function SolutionComparison({ scenario, selections }: SolutionComparisonProps) {
+  const t = useT();
   const ref = scenario.referenceSolution;
   const allDecisions = scenario.steps.flatMap(s => s.decisions);
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 space-y-4">
-      <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Сравнение с эталоном</h3>
+      <h3 className="text-sm font-semibold text-gray-900 dark:text-white">{t.solutionComparison.title}</h3>
 
       <div className="space-y-3">
         {allDecisions.map(decision => {
@@ -47,7 +49,7 @@ export function SolutionComparison({ scenario, selections }: SolutionComparisonP
               </div>
               <div className="flex flex-col sm:flex-row gap-2">
                 <div className="flex-1">
-                  <span className="text-gray-500 dark:text-gray-400">Ваш выбор: </span>
+                  <span className="text-gray-500 dark:text-gray-400">{t.solutionComparison.yourChoice}</span>
                   <span className="text-gray-900 dark:text-white">
                     {userOpts.length > 0
                       ? decision.options.filter(o => userSet.has(o.id)).map(o => o.label).join(', ')
@@ -55,7 +57,7 @@ export function SolutionComparison({ scenario, selections }: SolutionComparisonP
                   </span>
                 </div>
                 <div className="flex-1">
-                  <span className="text-gray-500 dark:text-gray-400">Эталон: </span>
+                  <span className="text-gray-500 dark:text-gray-400">{t.solutionComparison.reference}</span>
                   <span className="text-gray-900 dark:text-white">
                     {decision.options.filter(o => refSet.has(o.id)).map(o => o.label).join(', ')}
                   </span>
@@ -67,7 +69,7 @@ export function SolutionComparison({ scenario, selections }: SolutionComparisonP
       </div>
 
       <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
-        <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Объяснение эталонного решения</h4>
+        <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">{t.solutionComparison.explanation}</h4>
         <div className="text-xs text-gray-600 dark:text-gray-400 space-y-2">
           {ref.explanation.split('\n\n').map((paragraph, i) => (
             <p key={i} className="whitespace-pre-line">{renderSimpleMarkdown(paragraph)}</p>
@@ -76,7 +78,7 @@ export function SolutionComparison({ scenario, selections }: SolutionComparisonP
       </div>
 
       <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
-        <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Архитектурная диаграмма</h4>
+        <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">{t.solutionComparison.diagram}</h4>
         <pre className="text-xs text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-900 rounded-lg p-3 overflow-x-auto">
           {ref.diagram}
         </pre>

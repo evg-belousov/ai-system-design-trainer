@@ -13,13 +13,17 @@ import { useQuizSession } from '@/hooks/useQuizSession';
 import { useProgress } from '@/hooks/useProgress';
 import { useTimer } from '@/hooks/useTimer';
 import { getAllQuestions } from '@/lib/questions';
+import { useLang } from '@/components/LanguageProvider';
+import { useT } from '@/i18n/useT';
 import Link from 'next/link';
 
 function QuizSession() {
   const searchParams = useSearchParams();
   const ids = searchParams.get('ids')?.split(',') ?? [];
+  const { lang } = useLang();
+  const t = useT();
 
-  const allQuestions = getAllQuestions();
+  const allQuestions = getAllQuestions(lang);
   const questions = useMemo(
     () => ids.map(id => allQuestions.find(q => q.id === id)).filter(Boolean) as typeof allQuestions,
     [ids, allQuestions]
@@ -79,6 +83,7 @@ function QuizSession() {
             question: q.question,
             userAnswer: text,
             sampleAnswer: q.sampleAnswer,
+            lang,
             ...(apiKey && { apiKey }),
           }),
         });
@@ -100,8 +105,8 @@ function QuizSession() {
   if (questions.length === 0) {
     return (
       <main className="max-w-2xl mx-auto px-4 py-8 text-center">
-        <p className="text-gray-600 dark:text-gray-400 mb-4">Вопросы не найдены.</p>
-        <Link href="/quiz" className="text-blue-600 hover:underline">Назад к настройкам</Link>
+        <p className="text-gray-600 dark:text-gray-400 mb-4">{t.quizSession.notFound}</p>
+        <Link href="/quiz" className="text-blue-600 hover:underline">{t.quizSession.backToSetup}</Link>
       </main>
     );
   }
@@ -110,9 +115,9 @@ function QuizSession() {
     return (
       <main className="max-w-2xl mx-auto px-4 py-8">
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-8 text-center">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Тренировка завершена!</h2>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">{t.quizSession.complete}</h2>
           <p className="text-gray-600 dark:text-gray-400 mb-2">
-            Quiz-вопросы: {session.score.correct} / {session.score.total} правильных
+            {t.quizSession.score(session.score.correct, session.score.total)}
           </p>
           {session.score.total > 0 && (
             <p className="text-3xl font-bold text-blue-600 mb-6">
@@ -124,13 +129,13 @@ function QuizSession() {
               href="/quiz"
               className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
             >
-              Новая тренировка
+              {t.quizSession.newTraining}
             </Link>
             <Link
               href="/"
               className="px-6 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:border-blue-400"
             >
-              На главную
+              {t.toHome}
             </Link>
           </div>
         </div>
@@ -173,7 +178,7 @@ function QuizSession() {
         {session.state === 'answered' && (
           <>
             {aiLoading && (
-              <div className="mt-4 text-gray-500 text-sm">Оценка AI...</div>
+              <div className="mt-4 text-gray-500 text-sm">{t.quizSession.aiEvaluating}</div>
             )}
             <ResultCard
               correct={session.lastResult?.correct ?? false}
@@ -192,9 +197,14 @@ export default function QuizSessionPage() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       <Header />
-      <Suspense fallback={<div className="max-w-2xl mx-auto px-4 py-8 text-gray-900 dark:text-white">Загрузка...</div>}>
+      <Suspense fallback={<LoadingFallback />}>
         <QuizSession />
       </Suspense>
     </div>
   );
+}
+
+function LoadingFallback() {
+  const t = useT();
+  return <div className="max-w-2xl mx-auto px-4 py-8 text-gray-900 dark:text-white">{t.loading}</div>;
 }

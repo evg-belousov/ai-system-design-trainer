@@ -12,14 +12,14 @@ describe('ScoreCard', () => {
   it('should render reset button', () => {
     render(<ScoreCard score={50} onReset={() => {}} />);
 
-    expect(screen.getByText('Пройти заново')).toBeInTheDocument();
+    expect(screen.getByText('Try again')).toBeInTheDocument();
   });
 
   it('should call onReset when reset button is clicked', () => {
     const onReset = vi.fn();
     render(<ScoreCard score={50} onReset={onReset} />);
 
-    fireEvent.click(screen.getByText('Пройти заново'));
+    fireEvent.click(screen.getByText('Try again'));
     expect(onReset).toHaveBeenCalledTimes(1);
   });
 });

@@ -34,7 +34,7 @@ describe('OptionCard', () => {
     expect(screen.queryByText(/Low latency/)).not.toBeInTheDocument();
 
     // Click expand button
-    fireEvent.click(screen.getByText('Подробнее'));
+    fireEvent.click(screen.getByText('Details'));
 
     expect(screen.getByText(/Low latency, Simple setup/)).toBeInTheDocument();
     expect(screen.getByText(/Memory cost, Cache invalidation/)).toBeInTheDocument();
@@ -44,7 +44,7 @@ describe('OptionCard', () => {
   it('should apply selected styling', () => {
     render(<OptionCard option={mockOption} selected={true} onToggle={() => {}} />);
 
-    expect(screen.getByText('Выбрано')).toBeInTheDocument();
+    expect(screen.getByText('Selected')).toBeInTheDocument();
   });
 
   it('should call onToggle when clicked', () => {
@@ -58,11 +58,11 @@ describe('OptionCard', () => {
   it('should render impact indicators via expand', () => {
     render(<OptionCard option={mockOption} selected={false} onToggle={() => {}} />);
 
-    fireEvent.click(screen.getByText('Подробнее'));
+    fireEvent.click(screen.getByText('Details'));
 
     // Pros and cons are rendered as impact details
-    expect(screen.getByText('Плюсы:')).toBeInTheDocument();
-    expect(screen.getByText('Минусы:')).toBeInTheDocument();
-    expect(screen.getByText('Лучше всего когда:')).toBeInTheDocument();
+    expect(screen.getByText('Pros:')).toBeInTheDocument();
+    expect(screen.getByText('Cons:')).toBeInTheDocument();
+    expect(screen.getByText('Best when:')).toBeInTheDocument();
   });
 });

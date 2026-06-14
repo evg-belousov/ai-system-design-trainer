@@ -12,16 +12,20 @@ import { SummaryView } from '@/components/constructor/SummaryView';
 import { useConstructorSession } from '@/hooks/useConstructorSession';
 import { useConstructorProgress } from '@/hooks/useConstructorProgress';
 import { getScenarioById, resolveCapacity } from '@/lib/constructor';
+import { useLang } from '@/components/LanguageProvider';
+import { useT } from '@/i18n/useT';
 
 function DesignSession() {
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
+  const { lang } = useLang();
+  const t = useT();
 
   if (!id) {
     notFound();
   }
 
-  const scenario = getScenarioById(id);
+  const scenario = getScenarioById(id, lang);
 
   if (!scenario) {
     notFound();
@@ -94,7 +98,7 @@ function DesignSession() {
                   disabled={state.currentStepIndex === 0}
                   className="px-4 py-2 text-sm font-medium rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
                 >
-                  Назад
+                  {t.back}
                 </button>
 
                 {isLastStep ? (
@@ -102,14 +106,14 @@ function DesignSession() {
                     onClick={handleFinish}
                     className="px-6 py-2 text-sm font-medium rounded-lg bg-green-600 text-white hover:bg-green-700 transition-colors cursor-pointer"
                   >
-                    Завершить
+                    {t.finish}
                   </button>
                 ) : (
                   <button
                     onClick={nextStep}
                     className="px-6 py-2 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors cursor-pointer"
                   >
-                    Далее
+                    {t.next}
                   </button>
                 )}
               </div>
@@ -141,9 +145,14 @@ export default function DesignSessionPage() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       <Header />
-      <Suspense fallback={<div className="max-w-2xl mx-auto px-4 py-8 text-gray-900 dark:text-white">Загрузка...</div>}>
+      <Suspense fallback={<LoadingFallback />}>
         <DesignSession />
       </Suspense>
     </div>
   );
+}
+
+function LoadingFallback() {
+  const t = useT();
+  return <div className="max-w-2xl mx-auto px-4 py-8 text-gray-900 dark:text-white">{t.loading}</div>;
 }

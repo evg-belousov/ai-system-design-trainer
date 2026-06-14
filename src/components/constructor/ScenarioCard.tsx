@@ -1,5 +1,8 @@
+'use client';
+
 import Link from 'next/link';
 import type { Scenario } from '@/data/constructor/types';
+import { useT } from '@/i18n/useT';
 
 interface ScenarioCardProps {
   scenario: Scenario;
@@ -7,6 +10,7 @@ interface ScenarioCardProps {
 }
 
 export function ScenarioCard({ scenario, progress }: ScenarioCardProps) {
+  const t = useT();
   return (
     <Link
       href={`/design/session?id=${scenario.id}`}
@@ -31,12 +35,12 @@ export function ScenarioCard({ scenario, progress }: ScenarioCardProps) {
 
       <div className="flex items-center justify-between">
         <span className="text-xs text-gray-400 dark:text-gray-500">
-          {scenario.steps.length} шагов · {scenario.steps.reduce((sum, s) => sum + s.decisions.length, 0)} решений
+          {t.scenarioCard.stepsDecisions(scenario.steps.length, scenario.steps.reduce((sum, s) => sum + s.decisions.length, 0))}
         </span>
 
         {progress?.completedAt && (
           <span className="text-xs font-medium text-green-600 dark:text-green-400">
-            {progress.score !== null ? `${progress.score}%` : 'Пройден'}
+            {progress.score !== null ? `${progress.score}%` : t.scenarioCard.passed}
           </span>
         )}
       </div>

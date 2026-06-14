@@ -12,7 +12,7 @@ describe('ResultCard', () => {
       />
     );
 
-    expect(screen.getByText('Правильно!')).toBeInTheDocument();
+    expect(screen.getByText('Correct!')).toBeInTheDocument();
     expect(screen.getByText('Пояснение к ответу')).toBeInTheDocument();
   });
 
@@ -25,7 +25,7 @@ describe('ResultCard', () => {
       />
     );
 
-    expect(screen.getByText('Неправильно')).toBeInTheDocument();
+    expect(screen.getByText('Incorrect')).toBeInTheDocument();
   });
 
   it('should call onNext when button clicked', () => {
@@ -38,7 +38,7 @@ describe('ResultCard', () => {
       />
     );
 
-    fireEvent.click(screen.getByText('Далее'));
+    fireEvent.click(screen.getByText('Next'));
     expect(onNext).toHaveBeenCalledOnce();
   });
 });

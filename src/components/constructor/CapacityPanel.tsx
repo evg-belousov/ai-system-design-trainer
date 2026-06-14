@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import type { CapacityEstimate } from '@/data/constructor/types';
+import { useT } from '@/i18n/useT';
 
 interface CapacityPanelProps {
   estimates: CapacityEstimate[];
@@ -9,6 +10,7 @@ interface CapacityPanelProps {
 
 export function CapacityPanel({ estimates }: CapacityPanelProps) {
   const [expanded, setExpanded] = useState(false);
+  const t = useT();
   const [changedLabels, setChangedLabels] = useState<Set<string>>(new Set());
   const prevEstimates = useRef<Map<string, string>>(new Map());
 
@@ -45,7 +47,7 @@ export function CapacityPanel({ estimates }: CapacityPanelProps) {
           Capacity Estimation
         </h3>
         <p className="text-xs text-gray-400 dark:text-gray-500">
-          Выберите параметры системы — расчёты появятся автоматически
+          {t.capacityPanel.empty}
         </p>
       </div>
     );
@@ -61,12 +63,12 @@ export function CapacityPanel({ estimates }: CapacityPanelProps) {
           onClick={() => setExpanded(!expanded)}
           className="text-xs text-blue-600 dark:text-blue-400 hover:underline cursor-pointer"
         >
-          {expanded ? 'Скрыть расчёты' : 'Показать расчёты'}
+          {expanded ? t.capacityPanel.hide : t.capacityPanel.show}
         </button>
       </div>
 
       <p className="text-[10px] text-gray-400 dark:text-gray-500 mb-2">
-        Цифры пересчитываются при каждом выборе технологии
+        {t.capacityPanel.note}
       </p>
 
       <div className="grid grid-cols-2 gap-2">

@@ -94,7 +94,7 @@ describe('StepCard', () => {
       />,
     );
 
-    expect(screen.getByText('Показать подсказку')).toBeInTheDocument();
+    expect(screen.getByText('Show hint')).toBeInTheDocument();
   });
 
   it('should not show TipReveal when no tip', () => {
@@ -107,7 +107,7 @@ describe('StepCard', () => {
       />,
     );
 
-    expect(screen.queryByText('Показать подсказку')).not.toBeInTheDocument();
+    expect(screen.queryByText('Show hint')).not.toBeInTheDocument();
   });
 
   it('should show tip text on click', () => {
@@ -124,7 +124,7 @@ describe('StepCard', () => {
     expect(screen.queryByText('Consider read/write ratio')).not.toBeInTheDocument();
 
     // Click to reveal
-    fireEvent.click(screen.getByText('Показать подсказку'));
+    fireEvent.click(screen.getByText('Show hint'));
     expect(screen.getByText('Consider read/write ratio')).toBeInTheDocument();
   });
 });

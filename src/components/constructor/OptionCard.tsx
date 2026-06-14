@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import type { Option } from '@/data/constructor/types';
+import { useT } from '@/i18n/useT';
 
 interface OptionCardProps {
   option: Option;
@@ -11,6 +12,7 @@ interface OptionCardProps {
 
 export function OptionCard({ option, selected, onToggle }: OptionCardProps) {
   const [expanded, setExpanded] = useState(false);
+  const t = useT();
 
   return (
     <div
@@ -30,7 +32,7 @@ export function OptionCard({ option, selected, onToggle }: OptionCardProps) {
           </span>
           {selected && (
             <span className="text-green-600 dark:text-green-400 text-xs font-medium">
-              Выбрано
+              {t.optionCard.selected}
             </span>
           )}
         </div>
@@ -42,21 +44,21 @@ export function OptionCard({ option, selected, onToggle }: OptionCardProps) {
           onClick={(e) => { e.stopPropagation(); setExpanded(!expanded); }}
           className="text-xs text-blue-600 dark:text-blue-400 hover:underline cursor-pointer"
         >
-          {expanded ? 'Скрыть детали' : 'Подробнее'}
+          {expanded ? t.optionCard.hideDetails : t.optionCard.showDetails}
         </button>
 
         {expanded && (
           <div className="mt-2 space-y-2 text-xs">
             <div>
-              <span className="font-medium text-green-700 dark:text-green-400">Плюсы: </span>
+              <span className="font-medium text-green-700 dark:text-green-400">{t.optionCard.pros}</span>
               <span className="text-gray-600 dark:text-gray-400">{option.pros.join(', ')}</span>
             </div>
             <div>
-              <span className="font-medium text-red-700 dark:text-red-400">Минусы: </span>
+              <span className="font-medium text-red-700 dark:text-red-400">{t.optionCard.cons}</span>
               <span className="text-gray-600 dark:text-gray-400">{option.cons.join(', ')}</span>
             </div>
             <div>
-              <span className="font-medium text-blue-700 dark:text-blue-400">Лучше всего когда: </span>
+              <span className="font-medium text-blue-700 dark:text-blue-400">{t.optionCard.bestWhen}</span>
               <span className="text-gray-600 dark:text-gray-400">{option.bestWhen}</span>
             </div>
           </div>

@@ -551,7 +551,7 @@ export const cachingQuestions: Question[] = [
     sampleAnswer:
       'Personalized content is hard to cache because it is unique for each user. Strategies: 1) Per-user cache key — cache by user:123:feed. Works for active users, but the cache hit rate is low for long-tail users. 2) Materialized feeds — precompute and store each user\'s feed (fan-out-on-write). Twitter uses this for active users. Expensive in terms of memory. 3) Compute on read with caching of components — do not cache the whole feed, but cache: users (user:123:profile), posts (post:456), recommendation vectors. 4) Edge caching with ESI (Edge Side Includes) — the CDN assembles the page from cacheable and personal blocks. 5) Segment-based caching — group users into segments (interests, region) and cache for the segment. 6) Hybrid — materialized for top users, compute for the rest.',
     explanation:
-      'Personalization is one of the main challenges for caching. Netflix and Spotify use a multi-level approach: they cache models and vectors and compute recommendations near-realtime. It is important to find a balance between personalization and cache efficiency.',
+      'Personalization is one of the main challenges for caching. Netflix and Spotify use a multi-level approach: they cache models and vectors and compute recommendations near real-time. It is important to find a balance between personalization and cache efficiency.',
   },
   {
     id: 'sd-caching-035',

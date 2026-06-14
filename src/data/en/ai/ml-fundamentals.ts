@@ -62,16 +62,16 @@ export const mlFundamentalsQuestions: Question[] = [
     topicLabel: 'ML Fundamentals',
     difficulty: 'middle',
     type: 'quiz',
-    question: 'What does the bias-variance tradeoff describe?',
+    question: 'What does the bias-variance trade-off describe?',
     options: [
-      'A tradeoff between training speed and model quality',
-      'A tradeoff between error from simplifying assumptions in the model (bias) and error from sensitivity to the specific data (variance)',
-      'A tradeoff between the size of the training set and the test set',
-      'A tradeoff between the number of features and the number of examples',
+      'A trade-off between training speed and model quality',
+      'A trade-off between error from simplifying assumptions in the model (bias) and error from sensitivity to the specific data (variance)',
+      'A trade-off between the size of the training set and the test set',
+      'A trade-off between the number of features and the number of examples',
     ],
     correctIndex: 1,
     explanation:
-      'The bias-variance tradeoff is a fundamental concept in ML. High bias (underfitting): the model is too simple and fails to capture patterns (example: linear regression for nonlinear data). High variance (overfitting): the model is too complex and adapts to the noise in the data. Total error = bias² + variance + irreducible error. The goal is to find a balance: a model complex enough to capture the patterns, but not so complex that it memorizes the noise.',
+      'The bias-variance trade-off is a fundamental concept in ML. High bias (underfitting): the model is too simple and fails to capture patterns (example: linear regression for nonlinear data). High variance (overfitting): the model is too complex and adapts to the noise in the data. Total error = bias² + variance + irreducible error. The goal is to find a balance: a model complex enough to capture the patterns, but not so complex that it memorizes the noise.',
   },
   {
     id: 'ai-ml-fundamentals-005',

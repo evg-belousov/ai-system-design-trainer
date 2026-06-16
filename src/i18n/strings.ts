@@ -13,6 +13,8 @@ interface MetricCopy {
 
 export interface Dict {
   brand: string;
+  /** Studio attribution prefix shown before the Owlary mark in the footer. */
+  madeBy: string;
   startTraining: string;
   next: string;
   back: string;
@@ -143,6 +145,7 @@ export interface Dict {
 
 const en: Dict = {
   brand: 'System Design Trainer',
+  madeBy: 'Made in',
   startTraining: 'Start training',
   next: 'Next',
   back: 'Back',
@@ -314,6 +317,7 @@ const en: Dict = {
 
 const ru: Dict = {
   brand: 'System Design Trainer',
+  madeBy: 'Сделано в',
   startTraining: 'Начать тренировку',
   next: 'Далее',
   back: 'Назад',
